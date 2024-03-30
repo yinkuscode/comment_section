@@ -5,16 +5,22 @@ import dele from "../assets/icon-delete.svg";
 import edit from "../assets/icon-edit.svg";
 import { data2 } from "../utilis";
 import { useState } from "react";
-import Modal from "./Modal";
+import DeleteModal from "./Modals/DeleteModal";
+import EditModal from "./Modals/EditModal";
 
 function Data2() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const toggleModal = () => {
-    setIsModalOpen(true);
-  };
+  const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  function updateShowModal() {
+    setShowModal(true);
+  }
+  function updateEditModal() {
+    setShowEditModal(true);
+  }
   return (
     <div>
-      <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}></Modal>
+      <DeleteModal showModal={showModal} />;
+      <EditModal showEditModal={showEditModal} />
       {data2?.map((item, index) => {
         return (
           <div key={index} className=" flex justify-between">
@@ -50,15 +56,20 @@ function Data2() {
                     </div>
                     {item.flag === true ? (
                       <div className=" hidden md:visible md:flex md:items-center ">
-                        <img src={dele} alt="" />
-                        <h2 className="pr-3 pl-3 text-red-500">Delete</h2>
-                        <img src={edit} alt="" className="" />
-                        <h2
-                          className=" pr-3 pl-3 text-blue-500"
-                          onClick={toggleModal}
+                        <button
+                          className="flex items-center"
+                          onClick={updateShowModal}
                         >
-                          Edit
-                        </h2>
+                          <img src={dele} alt="" />
+                          <h2 className="pr-3 pl-3 text-red-500">Delete</h2>
+                        </button>
+                        <button
+                          className="flex items-center"
+                          onClick={updateEditModal}
+                        >
+                          <img src={edit} alt="" className="" />
+                          <h2 className=" pr-3 pl-3 text-blue-500">Edit</h2>
+                        </button>
                       </div>
                     ) : (
                       <div>
